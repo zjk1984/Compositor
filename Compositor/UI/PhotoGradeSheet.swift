@@ -1,7 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// Batch photo culling and development powered by the vendored raw-photo-grade toolkit.
+/// Batch photo culling and development using Compositor's native photo-grade engine.
 struct PhotoGradeSheet: View {
     let session: EditorSession
     @Environment(\.dismiss) private var dismiss
@@ -37,14 +37,9 @@ struct PhotoGradeSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Photo Grade Shoot").font(.title2.bold())
-            Text("Evaluate RAW and JPEG files with the raw-photo-grade engine, tier them S/A/B/C, and optionally develop keepers.")
+            Text("Evaluate RAW and JPEG files, tier them S/A/B/C, and optionally develop keepers using Core Image and Camera Raw.")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
-
-            if !PhotoGradeService.isAvailable {
-                Label("Install Python 3 and raw-photo-grade dependencies to enable grading.", systemImage: "exclamationmark.triangle")
-                    .foregroundStyle(.orange)
-            }
 
             GroupBox("Source") {
                 HStack {
@@ -121,7 +116,7 @@ struct PhotoGradeSheet: View {
                     .keyboardShortcut(.cancelAction)
                 Button(runTitle) { Task { await runWorkflow() } }
                     .keyboardShortcut(.defaultAction)
-                    .disabled(sourceFolder == nil || working || !PhotoGradeService.isAvailable
+                    .disabled(sourceFolder == nil || working
                               || (workflow != .evaluate && selectedTiers.isEmpty))
             }
         }
