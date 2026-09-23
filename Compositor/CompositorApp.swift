@@ -24,7 +24,7 @@ struct CompositorApp: App {
                 CommandGroup(replacing: .undoRedo) {
                     // Dialog text fields keep native text undo; document history
                     // is unavailable while an import or modal edit is active.
-                    if session.textDraft != nil || session.levels != nil || session.isProjectBusy || session.showsNewDocument || session.showsImporter || session.renamingLayerID != nil || session.transformEdit?.persistent == true {
+                    if session.textDraft != nil || session.levels != nil || session.isProjectBusy || session.showsNewDocument || session.showsImporter || session.showsPhotoGrade || session.renamingLayerID != nil || session.transformEdit?.persistent == true {
                         Button("Undo") {
                             if NSApp.keyWindow?.firstResponder is NSTextView {
                                 NSApp.sendAction(Selector(("undo:")), to: nil, from: nil)
@@ -56,6 +56,8 @@ struct CompositorApp: App {
                     }
                         .configuredKeyboardShortcut("o").disabled(!applicationDelegate.projects.canStart)
                     Button("Import Images…") { session.showsImporter = true }
+                        .disabled(session.levels != nil || session.showsBusy || session.isImporting || session.showsNewDocument)
+                    Button("Photo Grade Shoot…") { session.showsPhotoGrade = true }
                         .disabled(session.levels != nil || session.showsBusy || session.isImporting || session.showsNewDocument)
                 }
                 CommandGroup(replacing: .saveItem) {

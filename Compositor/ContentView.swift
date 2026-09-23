@@ -123,7 +123,7 @@ struct ContentView: View {
         .frame(minWidth: 800, minHeight: 520)
         .coordinateSpace(name: "editor")
         .onDrop(of: [UTType.fileURL.identifier, UTType.image.identifier, ProjectWorkspace.layerType], isTargeted: $isDropTargeted) { providers, location in
-            guard session.levels == nil, !session.isProjectBusy, !session.showsNewDocument, !session.showsImporter, session.renamingLayerID == nil else { return false }
+            guard session.levels == nil, !session.isProjectBusy, !session.showsNewDocument, !session.showsImporter, !session.showsPhotoGrade, session.renamingLayerID == nil else { return false }
             let point: CGPoint?
             if let document = session.document, canvasFrame.contains(location) {
                 point = session.viewport.documentPoint(
