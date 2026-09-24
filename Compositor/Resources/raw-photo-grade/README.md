@@ -1,5 +1,7 @@
 # raw-photo-grade
 
+> **Compositor note:** The macOS app runs a native Swift implementation in `Compositor/PhotoGrade/` (Core Image, Camera Raw, ImageIO). This Python bundle is kept as reference documentation, preset JSON, and skill metadata — it is not invoked at runtime.
+
 Three Claude Code skills that evaluate and develop RAW photos like a photographer would: evaluate technical & aesthetic quality, cull and tier into S/A/B/C using local GPU acceleration, inspect the file, make a preview, actually look at it, then grade, crop, and export. Not a one-shot filter.
 
 - **[photo-eval-grade](photo-eval-grade/)** — Batch quality evaluation & S/A/B/C tiering. Accelerated by Apple Silicon M4 / Metal GPU (MPS). Multi-dimensional scoring across sharpness (Tenengrad), dynamic range & exposure, noise control, color harmony, and composition.

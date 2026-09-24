@@ -184,16 +184,22 @@ enum JSONValue: Codable, Hashable, Sendable {
 
 enum PhotoGradeError: LocalizedError {
     case toolkitMissing
-    case pythonMissing
+    case noPhotosFound
+    case unreadableImage(String)
+    case encodeFailed
     case scriptFailed(String)
     case invalidOutput(String)
 
     var errorDescription: String? {
         switch self {
         case .toolkitMissing:
-            "The raw-photo-grade toolkit was not found in the app bundle."
-        case .pythonMissing:
-            "Python 3 is required for photo grading. Install dependencies with:\npip3 install -r Compositor/Resources/raw-photo-grade/photo-eval-grade/requirements.txt"
+            "The raw-photo-grade reference bundle was not found in the app."
+        case .noPhotosFound:
+            "No supported photo files were found in the selected folder."
+        case .unreadableImage(let message):
+            "Could not read \(message)."
+        case .encodeFailed:
+            "The developed photo could not be encoded as JPEG."
         case .scriptFailed(let message):
             message
         case .invalidOutput(let message):
